@@ -98,7 +98,3 @@ A typical workflow might look like this:
     ```
 
 Remember to adjust input and output directories, and other parameters, according to your specific data and analysis goals.
-
-## Contact
-
-For any questions or inquiries, please contact xiaozengxiansheng@gmaiol.com or open an issue on this repository.

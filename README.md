@@ -40,7 +40,9 @@ Here's a brief description of each script included in this repository:
     if (!requireNamespace("BiocManager", quietly = TRUE))
         install.packages("BiocManager")
     BiocManager::install(c("Seurat", "harmony", "clustree", "monocle"))
-    # For scRNAtoolVis, you might need to install from GitHub:https://github.com/junjunlab/scRNAtoolVis
+    #For scRNAtoolVis, you might need to install from GitHub:https://github.com/junjunlab/scRNAtoolVis
+    devtools::install_github("sajuukLyu/ggunchull", type = "source")
+    devtools::install_github('junjunlab/scRNAtoolVis')
     ```
 
 3.  **Install Python packages:**
@@ -58,8 +60,11 @@ A typical workflow might look like this:
     ```bash
     python scrublet_mult.py -s /path/to/matrix_list.txt -o ./scrublet_results
     ```
-    (Where `matrix_list.txt` contains paths to your individual sample matrix directories)
-
+    (Where `matrix_list.txt` contains paths to your individual sample matrix directories：/public/home/off_zengzhiwei/scRNA/LAp/matrix_data/YL
+     /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/OL
+     /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/YS
+     /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/OS)
+ 
 2.  **Preprocessing:**
     ```bash
     Rscript scRNAseq_preprocessing.R --sample_names Sample1,Sample2 --matrix_dir /path/to/raw_data --doublet_dir ./scrublet_results --output_dir ./preprocess_results

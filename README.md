@@ -1,1 +1,129 @@
-# scRNA-script
+# Single-cell RNA Sequencing Analysis Pipeline
+
+This repository contains a suite of R and Python scripts designed for a comprehensive single-cell RNA sequencing (scRNA-seq) data analysis pipeline. The pipeline covers essential steps from raw data preprocessing to advanced analyses like cell type annotation and pseudotime trajectory inference.
+
+## Table of Contents
+
+- [Features](#features)
+- [Scripts Overview](#scripts-overview)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+
+## Features
+
+* **Flexible Preprocessing:** Handles initial data loading, quality control, and filtering.
+* **Doublet Detection:** Integrates Scrublet for identifying and removing doublets.
+* **Normalization and Scaling:** Supports various normalization methods.
+* **Batch Effect Correction:** Implements Harmony or Seurat's `IntegrateData` for robust integration of multiple samples.
+* **Dimensionality Reduction:** Performs PCA, UMAP, and t-SNE for visualization.
+* **Clustering:** Identifies cell clusters with adjustable resolution.
+* **Marker Gene Identification:** Discovers cluster-specific marker genes.
+* **Cell Type Annotation:** Facilitates automated and manual cell type assignment.
+* **Gene Annotation:** Maps gene IDs to comprehensive annotation information.
+* **Pseudotime Trajectory Analysis:** Utilizes Monocle2 for inferring cell developmental trajectories.
+
+## Scripts Overview
+
+Here's a brief description of each script included in this repository:
+
+* `scrublet_mult.py`: A Python script for doublet detection using Scrublet, processing multiple single-cell matrices.
+* `scRNAseq_preprocessing.R`: R script for initial scRNA-seq data preprocessing, including loading, quality control metrics calculation (e.g., mitochondrial and ribosomal gene percentages), and basic filtering.
+* `scRNAseq_filtering_normalization_pca.R`: R script to perform advanced filtering based on gene and UMI counts, normalize data using methods like SCTransform or LogNormalize, and execute Principal Component Analysis (PCA).
+* `scRNAseq_Integrated.R`: R script for integrating multiple scRNA-seq samples, primarily using Seurat's `IntegrateData` function with SCTransform normalization, followed by PCA, UMAP, and t-SNE for integrated visualization.
+* `scRNAseq_clustering_reduction.R`: R script dedicated to clustering and further dimensionality reduction (UMAP, t-SNE). It includes options for batch effect correction using Harmony or Seurat's integration.
+* `scRNAseq_get_cluster_markers.R`: R script for identifying marker genes for each cell cluster. It calculates average expression and generates heatmaps of top marker genes.
+* `scRNAseq_annotate_celltypes.R`: R script for annotating cell types based on identified marker genes. It generates visualizations like dot plots and heatmaps to support annotation.
+* `gene_annotation.R`: R script for general gene annotation, merging BLASTP results and UniProt ID mapping files to enrich gene information (e.g., gene names, protein names, GO terms).
+* `scRNAseq_monocle2_step1.R`: R script for single-cell pseudotime trajectory analysis using Monocle2, including dimension reduction and cell ordering, and generating trajectory plots.
+
+## Installation
+
+### Prerequisites
+
+* R (>= 4.0)
+* Python (>= 3.7)
+* Required R packages: `Seurat`, `tidyverse`, `patchwork`, `harmony`, `clustree`, `future`, `optparse`, `pheatmap`, `scRNAtoolVis`, `readxl`, `Biostrings`, `monocle`
+* Required Python packages: `scrublet`, `numpy`, `scipy`, `matplotlib`, `pandas`, `numba`
+
+### Setting up the Environment
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/yourusername/your-repo-name.git)
+    cd your-repo-name
+    ```
+
+2.  **Install R packages:**
+    Open R and run:
+    ```R
+    install.packages(c("tidyverse", "patchwork", "optparse", "pheatmap", "readxl", "Biostrings", "future"))
+    if (!requireNamespace("BiocManager", quietly = TRUE))
+        install.packages("BiocManager")
+    BiocManager::install(c("Seurat", "harmony", "clustree", "monocle"))
+    # For scRNAtoolVis, you might need to install from GitHub or a specific BiocManager version
+    # if (!requireNamespace("remotes", quietly = TRUE)) {
+    #   install.packages("remotes")
+    # }
+    # remotes::install_github("your_scRNAtoolVis_repo/scRNAtoolVis") # Replace with actual source if known
+    ```
+
+3.  **Install Python packages:**
+    ```bash
+    pip install scrublet numpy scipy matplotlib pandas numba
+    ```
+
+## Usage
+
+Each script is designed to be run from the command line using `optparse` for R scripts and `argparse` for Python scripts. You can find detailed argument descriptions within each script by running them with the `--help` flag (e.g., `Rscript scRNAseq_preprocessing.R --help` or `python scrublet_mult.py --help`).
+
+A typical workflow might look like this:
+
+1.  **Doublet Detection:**
+    ```bash
+    python scrublet_mult.py -s /path/to/matrix_list.txt -o ./scrublet_results
+    ```
+    (Where `matrix_list.txt` contains paths to your individual sample matrix directories)
+
+2.  **Preprocessing:**
+    ```bash
+    Rscript scRNAseq_preprocessing.R --sample_names Sample1,Sample2 --matrix_dir /path/to/raw_data --doublet_dir ./scrublet_results --output_dir ./preprocess_results
+    ```
+
+3.  **Filtering, Normalization, PCA:**
+    ```bash
+    Rscript scRNAseq_filtering_normalization_pca.R --input_dir ./preprocess_results --output_dir ./norm_pca_results --normalization_method SCT --max_mt_percent 15
+    ```
+
+4.  **Integration (if multiple samples):**
+    ```bash
+    Rscript scRNAseq_Integrated.R --sample_names Sample1,Sample2 --matrix_dir /path/to/raw_data --output_dir ./integrated_results --celltype_file /path/to/celltype_annotations.csv # Optional cell type file
+    ```
+
+5.  **Clustering and Reduction:**
+    ```bash
+    Rscript scRNAseq_clustering_reduction.R --input_dir ./norm_pca_results --output_dir ./cluster_reduction_results --batch_correction harmony --pc_num 30 --cluster_resolutions 0.5,0.8,1.0
+    ```
+
+6.  **Get Cluster Markers:**
+    ```bash
+    Rscript scRNAseq_get_cluster_markers.R --input_dir ./cluster_reduction_results --output_dir ./marker_results --resolution 0.8 --top_n_markers 10
+    ```
+
+7.  **Cell Type Annotation:**
+    ```bash
+    Rscript scRNAseq_annotate_celltypes.R --input_dir ./marker_results --output_dir ./celltype_results --marker_genes CD3G,CD14,MS4A1 --cluster_order 5,3,1,2,4
+    ```
+
+8.  **Monocle2 Pseudotime Analysis:**
+    ```bash
+    Rscript scRNAseq_monocle2_step1.R --input_file /path/to/seurat_object.rds --output_dir ./monocle2_results --celltype_select "T cells" --root_celltype "Naive T cells"
+    ```
+
+Remember to adjust input and output directories, and other parameters, according to your specific data and analysis goals.
+
+## Contact
+
+For any questions or inquiries, please contact xiaozengxiansheng@gmaiol.com or open an issue on this repository.

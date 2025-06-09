@@ -8,8 +8,6 @@ This repository contains a suite of R and Python scripts designed for a comprehe
 - [Scripts Overview](#scripts-overview)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Features

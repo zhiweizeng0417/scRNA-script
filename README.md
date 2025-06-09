@@ -2,27 +2,6 @@
 
 This repository contains a suite of R and Python scripts designed for a comprehensive single-cell RNA sequencing (scRNA-seq) data analysis pipeline. The pipeline covers essential steps from raw data preprocessing to advanced analyses like cell type annotation and pseudotime trajectory inference.
 
-## Table of Contents
-
-- [Features](#features)
-- [Scripts Overview](#scripts-overview)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contact](#contact)
-
-## Features
-
-* **Flexible Preprocessing:** Handles initial data loading, quality control, and filtering.
-* **Doublet Detection:** Integrates Scrublet for identifying and removing doublets.
-* **Normalization and Scaling:** Supports various normalization methods.
-* **Batch Effect Correction:** Implements Harmony or Seurat's `IntegrateData` for robust integration of multiple samples.
-* **Dimensionality Reduction:** Performs PCA, UMAP, and t-SNE for visualization.
-* **Clustering:** Identifies cell clusters with adjustable resolution.
-* **Marker Gene Identification:** Discovers cluster-specific marker genes.
-* **Cell Type Annotation:** Facilitates automated and manual cell type assignment.
-* **Gene Annotation:** Maps gene IDs to comprehensive annotation information.
-* **Pseudotime Trajectory Analysis:** Utilizes Monocle2 for inferring cell developmental trajectories.
-
 ## Scripts Overview
 
 Here's a brief description of each script included in this repository:
@@ -61,11 +40,7 @@ Here's a brief description of each script included in this repository:
     if (!requireNamespace("BiocManager", quietly = TRUE))
         install.packages("BiocManager")
     BiocManager::install(c("Seurat", "harmony", "clustree", "monocle"))
-    # For scRNAtoolVis, you might need to install from GitHub or a specific BiocManager version
-    # if (!requireNamespace("remotes", quietly = TRUE)) {
-    #   install.packages("remotes")
-    # }
-    # remotes::install_github("your_scRNAtoolVis_repo/scRNAtoolVis") # Replace with actual source if known
+    # For scRNAtoolVis, you might need to install from GitHub:https://github.com/junjunlab/scRNAtoolVis
     ```
 
 3.  **Install Python packages:**

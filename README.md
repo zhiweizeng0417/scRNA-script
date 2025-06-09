@@ -28,8 +28,8 @@ Here's a brief description of each script included in this repository:
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/yourusername/your-repo-name.git)
-    cd your-repo-name
+    git clone https://github.com/zhiweizeng0417/scRNA-script
+    cd scRNA-script
     ```
 
 2.  **Install R packages:**

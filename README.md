@@ -57,11 +57,11 @@ A typical workflow might look like this:
     ```bash
     python scrublet_mult.py -s /path/to/matrix_list.txt -o ./scrublet_results
     ```
-    (Where `matrix_list.txt` contains paths to your individual sample matrix directories：\
+     `matrix_list.txt` contains paths to your individual sample matrix directories：
      /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/YL \
      /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/OL \
      /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/YS \
-     /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/OS)
+     /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/OS
  
 3.  **Preprocessing:**
     ```bash

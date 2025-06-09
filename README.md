@@ -13,7 +13,6 @@ Here's a brief description of each script included in this repository:
 * `scRNAseq_clustering_reduction.R`: R script dedicated to clustering and further dimensionality reduction (UMAP, t-SNE). It includes options for batch effect correction using Harmony or Seurat's integration.
 * `scRNAseq_get_cluster_markers.R`: R script for identifying marker genes for each cell cluster. It calculates average expression and generates heatmaps of top marker genes.
 * `scRNAseq_annotate_celltypes.R`: R script for annotating cell types based on identified marker genes. It generates visualizations like dot plots and heatmaps to support annotation.
-* `gene_annotation.R`: R script for general gene annotation, merging BLASTP results and UniProt ID mapping files to enrich gene information (e.g., gene names, protein names, GO terms).
 * `scRNAseq_monocle2_step1.R`: R script for single-cell pseudotime trajectory analysis using Monocle2, including dimension reduction and cell ordering, and generating trajectory plots.
 
 ## Installation

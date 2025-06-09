@@ -57,42 +57,43 @@ A typical workflow might look like this:
     ```bash
     python scrublet_mult.py -s /path/to/matrix_list.txt -o ./scrublet_results
     ```
-    (Where `matrix_list.txt` contains paths to your individual sample matrix directories：/public/home/off_zengzhiwei/scRNA/LAp/matrix_data/YL
+    (Where `matrix_list.txt` contains paths to your individual sample matrix directories：\
+     /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/YL \
      /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/OL \
      /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/YS \
      /public/home/off_zengzhiwei/scRNA/LAp/matrix_data/OS)
  
-2.  **Preprocessing:**
+3.  **Preprocessing:**
     ```bash
     Rscript scRNAseq_preprocessing.R --sample_names Sample1,Sample2 --matrix_dir /path/to/raw_data --doublet_dir ./scrublet_results --output_dir ./preprocess_results
     ```
 
-3.  **Filtering, Normalization, PCA:**
+4.  **Filtering, Normalization, PCA:**
     ```bash
     Rscript scRNAseq_filtering_normalization_pca.R --input_dir ./preprocess_results --output_dir ./norm_pca_results --normalization_method SCT --max_mt_percent 15
     ```
 
-4.  **Integration (if multiple samples):**
+5.  **Integration (if multiple samples):**
     ```bash
     Rscript scRNAseq_Integrated.R --sample_names Sample1,Sample2 --matrix_dir /path/to/raw_data --output_dir ./integrated_results --celltype_file /path/to/celltype_annotations.csv # Optional cell type file
     ```
 
-5.  **Clustering and Reduction:**
+6.  **Clustering and Reduction:**
     ```bash
     Rscript scRNAseq_clustering_reduction.R --input_dir ./norm_pca_results --output_dir ./cluster_reduction_results --batch_correction harmony --pc_num 30 --cluster_resolutions 0.5,0.8,1.0
     ```
 
-6.  **Get Cluster Markers:**
+7.  **Get Cluster Markers:**
     ```bash
     Rscript scRNAseq_get_cluster_markers.R --input_dir ./cluster_reduction_results --output_dir ./marker_results --resolution 0.8 --top_n_markers 10
     ```
 
-7.  **Cell Type Annotation:**
+8.  **Cell Type Annotation:**
     ```bash
     Rscript scRNAseq_annotate_celltypes.R --input_dir ./marker_results --output_dir ./celltype_results --marker_genes CD3G,CD14,MS4A1 --cluster_order 5,3,1,2,4
     ```
 
-8.  **Monocle2 Pseudotime Analysis:**
+9.  **Monocle2 Pseudotime Analysis:**
     ```bash
     Rscript scRNAseq_monocle2_step1.R --input_file /path/to/seurat_object.rds --output_dir ./monocle2_results --celltype_select "T cells" --root_celltype "Naive T cells"
     ```

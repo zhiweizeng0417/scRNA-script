@@ -57,7 +57,7 @@ def run_scrublet(matrix_paths, output_dir, doublet_score_threshold=None):
 
         # 提取样本名称
         parts = matrix_path.split('/')
-        sample_name = parts[-1]  # 倒数第四个目录是样本名称
+        sample_name = parts[-1]  #倒数最后一个目录当作样品名称
         
         print(f'Processing sample: {sample_name}')
 
